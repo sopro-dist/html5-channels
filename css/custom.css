@@ -1,0 +1,525 @@
+/* 
+
+Primary Color:
+#3f51b5
+rgba(63,81,181, 0.3);
+
+Accent Color:
+#ff5722
+rgba(255,87,34, 0.3);
+
+*/
+
+
+
+body{
+  overflow: hidden;
+}
+
+/*  TODO: Make left nav togglable on md+ screens. Our local copy  of angular-
+material.css has the offending sidenav mediaquery removed, but it will return
+when compiled until we fork sidenav. 
+See: https://github.com/angular/material/blob/master/src/components/sidenav/_sidenav.scss#L44 
+*/
+
+material-card.groupCard{
+  background-color: lightgreen;
+  display: inline-block;
+  min-height: 100px;
+  max-width: 300px;
+  min-width: 300px;
+  padding: 16px 16px 0 16px;
+}
+
+material-card.groupCard h3{
+  min-height: 28px;
+  line-height: 28px;
+  margin: 0;
+  padding: 0;
+}
+
+material-card.groupCard span.groupType{
+  text-transform:capitalize;
+}
+
+.cardMenuBar{
+  visibility: hidden;
+}
+
+.cardholder:hover .cardMenuBar{
+  visibility: visible; 
+}
+
+.overflowMenuButton{
+  /* Brute force vertical align of 18px img in 24px cardMenuBar */
+  margin-top: 4px;
+}
+.lightDetails {
+  opacity: 0.4;
+  margin-bottom: 4px;
+}
+.lightDetails span{
+  line-height: 18px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+} 
+.lightDetails img{
+  line-height: 18px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+}
+.lightDetails span.groupMemberLength{
+  margin-left: 8px;
+  text-align: right;
+  font-size: 14px;
+}
+
+/*
+.groupCount {
+  float: right;
+  vertical-align: top;
+}
+*/
+/* end material-card styles */
+
+core-icon-button:focus{
+  background-color: rgba(0,0,0,0.54);
+}
+
+#titleText {
+  float: left;
+  vertical-align: middle;
+}
+
+#viewButtons {
+  margin: 8px 18px 0px 18px;
+}
+
+.viewButton {
+  border: 1px solid rgba(0,0,0,0.2);
+  height: 48px;
+  width: 53px;
+}
+.viewButton.active {
+  background-color: rgba(0,0,0,0.1);
+}
+.viewButton.inactive {
+  opacity: 0.5;
+}
+
+.menu-icon {
+  top: 0;
+  cursor: pointer;
+}
+
+.mainTitle {
+  width: 100%;
+}
+
+.clearBoth {
+  clear: both;
+}
+
+.content-padding {
+  padding: 20px;
+}
+
+.groupListsContainer {
+  /* height: 100vh; */
+}
+#quiltContainer > * {
+  vertical-align: top;
+}
+
+#quickAddBox {
+  border: 1px solid lightgrey;
+  display: block;
+  position: relative;
+  max-width: 500px;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 8px;
+  line-height: 24px;
+  background-color: rgba(255,255,255,0.9);
+  margin-top: 4px;
+  margin-bottom: 14px;
+}
+
+#quickAddTitle {
+  display: inline-block;
+  border-bottom: none;
+  font-size: 14px;
+}
+
+#quickAddAdditional {
+  margin-top: 8px;
+}
+
+#quickAddBox .bold {
+  font-weight: bold;
+  font-size: 17px;
+}
+#quickAddDescription {
+  display: inline-block;
+  border-bottom: none;
+  font-size: 14px;
+}
+#quickAddBox input {
+  border-bottom: none;
+}
+#quickAddBox textarea {
+  border-bottom: none;
+  width: 100%;
+  line-height: 1.2em;
+}
+
+#quickAddButton {
+  float: right;
+}
+
+#myGroupsContainer{
+  padding-bottom: 100px;
+}
+
+.cardholder {
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+}
+.quilt {
+  display: inline-block;
+}
+.stream {
+  width:100%;
+}
+.stream material-card {
+  width: 95%;
+  max-width: none;
+}
+
+#addGroupCardButton {
+  transition: top ease-in-out 0.3s;
+  transition: background-color ease-in-out 0.3s;
+}
+#addGroupCardButton{
+  display: block;
+  position: fixed;
+  width: 56px;
+  height: 56px;
+  right: 24px;
+  bottom: 24px;
+  z-index: 5;
+  background-color: rgba(82, 110, 156, 0.8);
+}
+/* Fade in when you focus: */
+#addGroupCardButton:focus, #addGroupCardButton:hover{
+  background-color: rgba(82, 110, 156, 1);
+}
+/* Spin the cross button when you focus: */
+#addGroupCardButton core-icon{
+  color: white;
+  transition: transform ease-in-out 0.6s;
+}
+#addGroupCardButton:focus core-icon, #addGroupCardButton:hover core-icon{
+  transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+}
+
+material-item {
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+/* COPIED FROM JIMMY'S CODE FOR POLLMASTER DROPDOWN AND EDITED
+ * This should eventually be a component
+ */
+
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.custom-dropdown select {
+  background-color: transparent;
+  color: #444;
+  font-size: inherit;
+  padding-right: 2.5em; 
+  border: none;
+  margin: 0;
+  border-radius: 3px;
+  text-indent: 0.01px;
+  text-overflow: '';
+  -webkit-appearance: button;
+  border-bottom: 2px solid #B1AFAF;  
+}
+.custom-dropdown select{
+  text-transform: capitalize;
+  width: 100%;
+}
+.custom-dropdown::before,
+.custom-dropdown::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  padding-bottom: none;
+}
+
+.custom-dropdown::after {
+  content: "\25BC";
+  height: 1em;
+  font-size: .625em;
+  line-height: 1;
+  right: 1.2em;
+  top: 50%;
+  margin-top: -.5em;
+}
+
+.custom-dropdown::before {
+  width: 2em;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 0 3px 3px 0;
+  border-bottom: 2px solid #B1AFAF;
+}
+
+.custom-dropdown::before {
+  background-color: transparent;
+}
+
+.custom-dropdown::after {
+  color: rgba(0,0,0,.4);
+}
+
+.small {
+  font-size: 1em;
+}
+
+
+/* 
+ * 
+ * EVERYTHIGN BELOW HERE IS COPIED FROM ANGULAR/MATERIAL DOCS.CSS
+ * 
+ */
+
+/*
+
+[layout-fill] {
+  margin: 0;
+  height: 100%;
+  width: 100%; }
+
+ material-content, .material-content {
+  display: block;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch; }
+  material-content[scroll-y], .material-content[scroll-y] {
+    overflow-y: auto;
+    overflow-x: hidden; }
+  material-content[scroll-x], .material-content[scroll-x] {
+    overflow-x: auto;
+    overflow-y: hidden; }
+  material-content.material-content-padding, .material-content.material-content-padding {
+    padding: 20px; }
+
+material-toolbar {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+  font-size: 1.3em;
+  min-height: 64px;
+  width: 100%; }
+  material-toolbar.material-tall {
+    height: 192px; }
+  material-toolbar.material-medium-tall {
+    height: 88px; }
+    material-toolbar.material-medium-tall .material-toolbar-tools {
+      height: 48px; }
+  material-toolbar .material-indent {
+    margin-left: 64px; }
+
+.material-toolbar-tools {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  height: 64px;
+  font-size: inherit;
+  font-weight: normal;
+  padding: 0 10px;
+  margin: 0; }
+  .material-toolbar-tools > * {
+    font-size: inherit;
+    margin: 0 8px; }
+  .material-toolbar-tools h2, .material-toolbar-tools h3 {
+    font-weight: normal; }
+  .material-toolbar-tools a {
+    color: inherit;
+    text-decoration: none; }
+  .material-toolbar-tools material-button {
+    font-size: 16px; }
+*/
+material-toolbar {
+  min-height: 48px;
+  height: 48px;
+}
+.menu-icon {
+  top: 0;
+  margin-top: -14px;
+  margin-left: 18px;
+  margin-right: 9px;
+  cursor: pointer;
+}
+#toolTitle {
+  margin-bottom: 20px;
+  font-size: 15px;
+  margin-left: 0px;
+}
+.viewButton {
+  border: 1px solid rgba(0,0,0,0.2);
+  height: 26px;
+  width: 35px;
+  margin-top: 3px;
+}
+.viewButton:hover {
+  opacity: 1;
+}
+#streamButton:hover {
+  background: none;
+}
+#quiltButton:hover {
+  background: none;
+}
+.viewButton button img {
+  margin-top: -3px;
+  margin-left: -1px;
+}
+.appVersion p {
+  color: slategray;
+  background-color: white;
+  margin-bottom: 0px;
+  padding: 10px;
+}
+.material-dialog-container material-dialog {
+  width:  50%;
+}
+material-ink-bar {
+  background: black;
+}
+material-checkbox {
+  margin:0px;
+}
+.tab1 {
+  padding:15px;
+}
+material-checkbox:focus .material-label {
+  border-color:transparent;
+}
+.checkLabel {
+  margin: 0px 5px;
+  margin-top: 5px;
+}
+.options p{
+  margin:0px;
+  font-size: 13px;
+}
+::-webkit-scrollbar {  
+    width: 12px; 
+}  
+::-webkit-scrollbar-track {  
+    background-color: rgba(234,234,234,0.2);
+}  
+::-webkit-scrollbar-thumb {  
+    background-color: #ccc;  
+}  
+::-webkit-scrollbar-thumb:hover {  
+    background-color: #aaa;  
+}
+.inputInside input {
+  border: 1px solid slategray;
+  width: 35px;
+  text-align: center;
+}
+.alliance {
+  background-color: #5B391E !important;
+  color: white;
+}
+material-checkbox .material-icon {
+  margin-top: 3px;
+}
+material-checkbox {
+  margin: 1px;
+}
+.newRuleWrapper {
+margin: 16px 0;
+}
+#addRuleInput {
+  background-image: url(../material-icons/icons/system_icons/content/res/1x_web/ic_add_18dp.png);
+  background-repeat: no-repeat;
+  text-indent: 20px;
+}
+#addRuleInput {
+  line-height: 15px;
+  margin: 5px 0;
+}
+.rulesLine.focused {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}
+.newRuleWrapper.focused {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}
+.ruleInput {
+  height: 28px;
+  width: 35px;
+  text-align: center;
+  border: 1px solid gray !important;
+  margin: 0px 5px;
+  display: inline-block;
+}
+.rulesLine p {
+  margin: 0px;
+  display: inline-block;
+  border-width: 0px 0px 1px 0px;
+  line-height: 30px;
+  font-size: 0.85em;
+  vertical-align: baseline;
+  color: black;
+  border-bottom: 1px solid rgb(233, 233, 233);  
+}
+textarea {
+  border-bottom-color: rgba(0,0,0,0.2);
+}
+.groupCard div p {
+  overflow: hidden;
+}

@@ -1,0 +1,327 @@
+<!-- STYLES AT END OF TEMPLATE -->
+<material-dialog>
+  <div layout="vertical" class="dialog-content">
+    <material-tabs selected="selectedIndex" center>
+        <material-tab label="Corporate Rulescape"></material-tab>
+        <material-tab label="Add Member"></material-tab>
+    </material-tabs>
+    <div class="animate-switch-container" ng-switch on="selectedIndex">
+        <div class="animate-switch tab1" ng-switch-when="0" material-swipe-left="next()" material-swipe-right="previous()" ng-init="data.cb1 = true">
+          <div layout="horizontal" class="rulesLine">
+            <material-checkbox ng-model="data.cb1" aria-label="Checkbox 1"></material-checkbox>
+            <p>require directors to post bond of </p>
+            <material-input class="rulesInput ruleInput" type="text" size="5" value="100"></material-input>
+            <p flex> bitcoin.</p>
+          </div>
+          <!-- -->
+          <div layout="horizontal" class="rulesLine">
+            <material-checkbox ng-model="data.cb1" aria-label="Checkbox 1"></material-checkbox>
+            <p>allow directors to vote out CEO with </p>
+            <material-input class="rulesInput ruleInput" type="text" size="5" value="2"></material-input>
+            <p> of </p>
+            <material-input class="rulesInput ruleInput" type="text" size="5" value="5"></material-input>
+            <p flex> vote.</p>
+          </div>
+          <!-- -->
+          <div layout="horizontal" class="rulesLine">
+            <material-checkbox ng-model="data.cb3" aria-label="Checkbox 1"></material-checkbox>
+            <p>members elect directors every </p>
+            <material-input class="rulesInput ruleInput" type="text" size="5" value="30"></material-input>
+            <p flex>days </p>
+          </div>
+          <!-- -->
+          <div layout="horizontal" class="rulesLine">
+            <material-checkbox ng-model="data.cb4" aria-label="Checkbox 1"></material-checkbox>
+            <p flex>allow CEO to unilaterally remove directors.</p>
+          </div>
+          <div class="rulesLine" ng-repeat="rule in group.rules" layout="horizontal"
+          ng-class="{focused: rule.hasFocus}" ng-mouseover="rule.menubar = true" ng-mouseleave="rule.menubar = false">
+            <material-checkbox ng-model="rule.isSelected"></material-checkbox>
+            <material-input type="text" class="rulesInput" ng-model="rule.text" flex placeholder="New Rule (click to edit)"  id="{{'rule'+$index}}" ng-keypress="keypressListener($event)" ng-focus="rule.hasFocus = true" ng-blur="rule.hasFocus = false" ng-keyup="checkForRuleDelete($event,$index)" ></material-input>
+            <material-button ng-show="rule.menubar" ng-click="removeRule($index)" title="Remove Rule"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></material-button>
+          </div>
+          <div class="newRuleWrapper" ng-class="{focused: newRuleFocused}">
+            <material-input type="text" id="addRuleInput" ng-model="newRuleText" ng-change="newRuleText = addRule(newRuleText)" placeholder="Add Rule" ng-focus="newRuleFocused = true" ng-blur="newRuleFocused = false"></material-input>
+          </div>
+        </div>
+        <div class="animate-switch tab2" ng-switch-when="1" material-swipe-left="next()" material-swipe-right="previous()">
+          <div layout="horizontal" id="groupDialogCaption">
+            <material-input-group>
+              <label 
+              for="groupName"
+              >Group Name</label>
+
+              <material-input 
+              name="groupName" 
+              id="groupName" 
+              type="text" 
+              size="45" 
+              ng-model="group.name"
+              ></material-input>
+            </material-input-group>
+            <span flex></span>
+            <div layout="horizontal" layout-align="center center">
+              <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png">
+              <span>{{group.members}}
+            </div>
+          </div>
+
+          
+
+          <label for="groupTypeContainer">Group Type</label>
+          
+          <div id="groupTypeContainer">
+            <div class="custom-dropdown small">
+              <select 
+              ng-model="newGroupType" 
+              ng-options="groupType for groupType in groupTypes"></select>
+            </div>
+          </div>
+
+          <div flex layout="horizontal">
+            <section flex="50" class="members" layout="vertical">
+              <span block class="sectionTitle">Group Members</span>
+              <material-list flex>
+                <material-item 
+                ng-repeat="member in group.members | orderBy:'id' | orderBy:'name'"
+                class="membersAnimate"
+                layout="horizontal"
+                >
+                  <span flex>{{member.name || member.id }}</span>
+                  <img 
+                  src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_forward_24dp.png"
+                  ng-click="group.removePeer(member)"
+                  >
+                </material-item>
+              </material-list>
+              <!--
+              <material-button block class="material-button-raised">Remove</material-button>
+              -->
+            </section>
+            <section flex="50" class="peers" layout="vertical">
+              <span block class="sectionTitle">Other Peers</span>
+              <material-list flex>
+                <material-item 
+                ng-repeat="peer in japi.me.peers | orderBy:'id' | orderBy:'name' | filter:nonMembers"
+                class="peersAnimate"
+                layout="horizontal"
+                >
+                  <img 
+                  src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_24dp.png"
+                  ng-click="group.addPeer(peer)"
+                  >
+                  <span flex>{{peer.name || peer.id }}</span>
+                </material-item>
+              </material-list>
+              <!--
+              <material-button block class="material-button-raised">Add to Group</material-button>
+              -->
+            </section>
+          </div>
+        </div>
+    </div>
+  
+    
+    
+  </div>
+  <footer class="dialog-actions" layout="horizontal" layout-end="end center">
+    <material-button ng-click="close()">
+      Close
+    </material-button>
+    <material-button ng-click="save(group)" class="material-button-colored">
+      Save
+    </material-button>
+  </footer>
+</material-dialog>
+
+
+<style>
+/* Some of these have !important because they are are overriding 
+angular's material style defaults */
+.material-dialog-container material-dialog{
+  min-width: 400px !important;
+  border-radius: 0px !important;
+}
+.dialog-content{
+  /* Force the dialog-content div to not scroll. We only want the actual lists to scroll. */
+  overflow: hidden !important;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
+  padding-bottom: 0px !important;
+}
+.dialog-content .sectionTitle{
+  text-transform: uppercase;
+  font-weight: lighter;
+  text-align: center;
+  font-size: 24px;
+  line-height: 24px;
+  color: white;
+  min-height: 40px;
+  margin: 0;
+  padding: 8px 0 0 0;
+}
+
+.members .sectionTitle{
+  background-color: rgb(63,81,181); /* #3f51b5 */
+}
+section.members {
+  background-color: rgba(63,81,181, 0.3); /* #3f51b5 */
+}
+
+.peers .sectionTitle{
+  background-color: rgb(255,87,34); /* #ff5722 */
+}
+section.peers {
+  background-color: rgba(255,87,34, 0.3); /* #ff5722 */
+}
+
+.dialog-content section{
+  overflow-y: hidden;
+  overflow-x: visible;
+  margin-top: 8px;
+}
+.dialog-content section material-list{
+  overflow-y: auto;
+  overflow-x: visible;
+}
+
+.dialog-content material-list material-item {
+  overflow-x: hidden;
+  min-height: 56px;
+  line-height: 24px;
+  padding: 0px 8px;
+  font-weight: bold;
+}
+
+.dialog-content section material-button.material-button-raised {
+  min-height: 40px;
+  line-height: 24px;
+  background-color: white;
+  margin: 4px 24px 4px 24px;
+}
+
+material-dialog footer {
+  min-height: 64px !important;
+}
+material-dialog footer material-button{
+  font-size: 1.6em;
+  margin-left: 32px;
+}
+/* Animations for moving peers around */
+/* Left list - Group members */
+/* Enter - This triggers when new peers are added to the group. Slide in from right. */
+.membersAnimate.ng-enter{
+  -webkit-transition: 0.3s ease-out all; /* Chrome */
+  transition: 0.3s ease-out all;
+  opacity: 0;
+  margin-left: 100%;
+}
+.membersAnimate.ng-enter.ng-enter-active{
+  opacity: 1;
+  margin-left: 0;
+}
+.membersAnimate.ng-enter-stagger {
+  /* this will have a 50ms delay between each successive enter animation */
+  -webkit-transition-delay: 0.05s;
+  transition-delay: 0.05s;
+
+  /* in case the stagger doesn't work then these two values
+   must be set to 0 to avoid an accidental CSS inheritance */
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+
+/* Leave - This triggers when peers are removed from the group. Slide out to right. */
+.membersAnimate.ng-leave{
+  -webkit-transition: 0.5s ease-out all; /* Chrome */
+  transition: 0.5s ease-out all;
+  opacity: 1;
+  margin-left: 0;
+}
+.membersAnimate.ng-leave.ng-leave-active{
+  opacity: 0;
+  margin-left: 100%;
+}
+.membersAnimate.ng-leave-stagger {
+  /* this will have a 50ms delay between each successive enter animation */
+  -webkit-transition-delay: 0.05s;
+  transition-delay: 0.05s;
+
+  /* in case the stagger doesn't work then these two values
+   must be set to 0 to avoid an accidental CSS inheritance */
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+
+/* Move - This triggers when the index of a member changes. */
+.membersAnimate.ng-move{
+  -webkit-transition: 1s ease all; /* Chrome */
+  transition: 1s ease all;
+}
+.membersAnimate.ng-move.ng-move-active{
+}
+
+/* Right list - Other Peers */
+/* Enter - This triggers when new peers are added; or existing peers are removed from the group. Slide in from left. */
+.peersAnimate.ng-enter{
+  -webkit-transition: 0.3s ease all; /* Chrome */
+  transition: 0.3s ease all;
+  opacity: 0;
+  margin-left: -100%;
+}
+.peersAnimate.ng-enter.ng-enter-active{
+  opacity: 1;
+  margin-left: 0;
+}
+.peersAnimate.ng-enter-stagger {
+  /* this will have a 50ms delay between each successive enter animation */
+  -webkit-transition-delay: 0.05s;
+  transition-delay: 0.05s;
+
+  /* in case the stagger doesn't work then these two values
+   must be set to 0 to avoid an accidental CSS inheritance */
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+
+/* Leave - This triggers when existing peers are added to the group. Slide out to left. */
+.peersAnimate.ng-leave{
+  -webkit-transition: 0.5s ease-out all; /* Chrome */
+  transition: 0.5s ease-out all;
+  opacity: 1;
+  margin-right: 0;
+}
+.peersAnimate.ng-leave.ng-leave-active{
+  opacity: 0;
+  margin-right: 100%;
+}
+.peersAnimate.ng-leave-stagger {
+  /* this will have a 50ms delay between each successive enter animation */
+  -webkit-transition-delay: 0.05s;
+  transition-delay: 0.05s;
+
+  /* in case the stagger doesn't work then these two values
+   must be set to 0 to avoid an accidental CSS inheritance */
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+/* Leave - This triggers when existing peers are added to the group. Slide out to left. */
+.peersAnimate.ng-move{
+  -webkit-transition: 1s ease all; /* Chrome */
+  transition: 1s ease all;
+}
+.peersAnimate.ng-move.ng-move-active{
+}
+#groupDialogCaption h3{
+  margin: 0;
+  padding: 0;
+}
+#groupDialogCaption img{
+  width: 18px;
+  height: 18px;
+  margin-top: 2px; // align with 24px line height
+}
+#groupDialogCaption span{
+  margin-left: 8px;
+}
+</style>

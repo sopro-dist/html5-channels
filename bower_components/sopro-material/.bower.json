@@ -1,0 +1,14 @@
+{
+  "name": "sopro-material",
+  "homepage": "https://github.com/sopro-components/sopro-material",
+  "version": "0.1.0",
+  "_release": "0.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.0",
+    "commit": "1c1d9181dedf45d9e4fdf968f80cfd87007406c9"
+  },
+  "_source": "https://github.com/sopro-components/sopro-material.git",
+  "_target": "0.1.0",
+  "_originalSource": "https://github.com/sopro-components/sopro-material.git"
+}

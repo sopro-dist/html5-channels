@@ -1,0 +1,14 @@
+{
+  "name": "roboto",
+  "homepage": "https://github.com/sopro-components/roboto",
+  "version": "0.1.0",
+  "_release": "0.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.0",
+    "commit": "dad31daa976131b627fcc75655e4f4fcc854c9a0"
+  },
+  "_source": "https://github.com/sopro-components/roboto.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/sopro-components/roboto.git"
+}

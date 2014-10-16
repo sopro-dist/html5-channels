@@ -1,0 +1,77 @@
+/*  Polymer is using the font name 'RobotoDraft'; this CSS file declares that
+/*  family to be the 2014 Roboto fonts in woff format.  */
+
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 100;
+  src: url(woff/Roboto-Thin.woff) format('woff'); }
+
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 300;
+  src: url(woff/Roboto-Light.woff) format('woff'); }
+
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 400;
+  src: url(woff/Roboto-Regular.woff) format('woff'); }
+
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 500;
+  src: url(woff/Roboto-Medium.woff) format('woff'); }
+
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 700;
+  src: url(woff/Roboto-Bold.woff) format('woff'); }
+
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 900;
+  src: url(woff/Roboto-Black.woff) format('woff'); }
+
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: italic;
+  font-weight: 400;
+  src: url(woff/Roboto-Italic.woff) format('woff'); }
+
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: italic;
+  font-weight: 700;
+  src: url(woff/Roboto-BoldItalic.woff) format('woff'); }
+
+
+
+
+@font-face {
+  font-family: 'RobotoSlab';
+  font-style: normal;
+  font-weight: 100;
+  src: url(woff/RobotoSlab-Thin.woff) format('woff'); }
+
+@font-face {
+  font-family: 'RobotoSlab';
+  font-style: normal;
+  font-weight: 300;
+  src: url(woff/RobotoSlab-Light.woff) format('woff'); }
+
+@font-face {
+  font-family: 'RobotoSlab';
+  font-style: normal;
+  font-weight: 400;
+  src: url(woff/RobotoSlab-Regular.woff) format('woff'); }
+
+@font-face {
+  font-family: 'RobotoSlab';
+  font-style: normal;
+  font-weight: 700;
+  src: url(woff/RobotoSlab-Bold.woff) format('woff'); }

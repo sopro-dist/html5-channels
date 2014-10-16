@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html tabindex="-1" ng-app="app">
+  <head>  
+    <title>Channels</title>
+    <script src="bower_components/japi/mocks/mockJapi.js" type="text/javascript"></script>
+    <script src="bower_components/japi/js/japi.js" type="text/javascript"></script>
+
+    <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="bower_components/angular/angular.js" type="text/javascript"></script>
+    <script src="bower_components/angular-animate/angular-animate.js" type="text/javascript"></script>
+    <script src="bower_components/sopro-material/js/angular-material.js" type="text/javascript"></script>
+    <!-- 
+    <script src="bower_components/material-titlebar/titlebar.js" type="text/javascript"></script>
+    -->
+
+    <!-- Keep app.js at the end -->
+    <script src="js/app.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" type="text/css" href="bower_components/sopro-material/css/angular-material.css">
+
+    <link rel="stylesheet" type="text/css" href="bower_components/roboto/2014/roboto-woff.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/sopro-material/css/sopro-material.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="css/pantheonGroupManager.css">
+  </head>
+  <body unresolved tabindex="-1" ng-controller="appCtrl">
+    <div id="applicationContainer" layout="horizontal" layout-fill>
+
+      <material-sidenav class="material-sidenav-left material-whiteframe-z2" component-id="left" layout="vertical">
+        <material-toolbar class="navToolbar">
+          <h1 id="navMenuTitle" class="material-toolbar-tools">Society Pro</h1>
+          <span flex></span>
+        </material-toolbar>
+        <material-content>
+          <div>
+          </div>
+        </material-content>
+        <span flex></span>
+        <div class="appVersion">
+          <p>Channels Manager version: 0.0.1</p>
+        </div>
+      </material-sidenav>
+
+      <div layout="vertical" layout-fill class="mainContainer">
+        <material-toolbar scroll-shrink>
+          <div layout="horizontal">
+            <div class="material-toolbar-tools">
+              <div class="menu-icon" ng-click="toggleMenu()">
+                <img src="material-icons/icons/system_icons/navigation/res/1x_web/ic_menu_wht_24dp.png">
+              </div>
+              <h2 id="toolTitle">Channels</h2>
+            </div>
+            <div id="viewButtons" layout="horizontal" layout-align="end">
+              <material-button id="streamButton" class="viewButton material-button-icon" ng-class="{active: listView === 'stream', inactive: listView === 'quilt'}" ng-click="streamView()">
+                <img src="material-icons/icons/system_icons/action/res/1x_web/ic_view_stream_wht_24dp.png">
+              </material-button>
+              <material-button id="quiltButton" class="viewButton material-button-icon" ng-class="{active: listView === 'quilt', inactive: listView === 'stream'}" ng-click="quiltView()">
+                <img src="material-icons/icons/system_icons/action/res/1x_web/ic_view_quilt_wht_24dp.png">
+              </material-button>
+            </div>
+          </div>
+        </material-toolbar>
+        <div class="content-padding" layout="vertical" flex>
+
+          <material-card id="quickAddBox">
+            <form name="quickAddForm" style="padding-left:20px;">
+            <!--
+              <material-input-group>
+                <label for="quickAddTitle">Add a group...</label>
+              </material-input-group>
+            -->
+              <material-input 
+              name="quickAddTitle" 
+              id="quickAddTitle" 
+              type="text" 
+              size="45" 
+              ng-model="newGroupTitle"
+              placeholder="Add a Channel..."
+              flex ng-click="inputClick = true"></material-input>
+              <textarea 
+              name="quickAddPurpose" 
+              id="quickAddPurpose" 
+              type="text" 
+              ng-model="newGroupPurpose"
+              placeholder="Purpose"
+              flex ng-show="inputClick"></textarea>
+              <div id="quickAddAdditional" ng-show="inputClick">
+                <material-button id="quickAddButton" class="material-button-colored" ng-show="newGroupTitle" ng-click="newGroup()">
+                  SAVE
+                </material-button>
+              </div>
+            </form>
+          </material-card>
+          <!-- Quick Add Box original 
+          <sopro-titlebar>
+              <div id="quickAddAdditional" ng-show="quickAddForm.$dirty">
+              <select ng-model="newGroupType" ng-options="groupType for groupType in groupTypes"></select>
+              <material-button id="quickAddButton" class="material-button-colored" ng-show="quickAddForm.$dirty" ng-click="newGroup()">
+                SAVE
+              </material-button>
+            </div>
+          </sopro-titlebar>
+          end Quick Add Box -->
+
+          <!-- 
+          <material-content 
+          ng-class="{'groupListsContainer':true, 'quiltView':listView === 'quilt', 'streamView':listView === 'stream'}" 
+          scroll-y flex>
+          -->
+          <material-content id="contentArea" flex>
+            <div id= "myGroupsContainer" ng-if="listContains === 'myGroups'">
+              <!-- material-card for groups -->  
+              <div class="cardholder" 
+              ng-repeat="group in myGroups"
+              ng-mouseleave="group.overflow = false;"
+              ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}"
+              >
+                <material-card 
+                class="groupCard" 
+                layout="vertical"
+                ng-click="dialog($event, group)">
+                  <div flex layout="vertical">
+                    <h3>{{group.name}}</h3>
+                    <div class="lightDetails" layout="horizontal">
+                      <span flex class='groupType'> {{group.type}} </span>
+                      <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png"> 
+                      <span class="groupMemberLength"> {{group.members.length}} </span>
+                    </div>
+                    <p>{{group.purpose}}</p>
+                  </div>
+                  
+                <div class="cardMenuBar" 
+                  layout="horizontal" 
+                  layout-align="end center">
+                    <material-button 
+                    class="overflowMenuButton material-button-icon" 
+                    ng-click="overflowToggle(group); $event.stopPropagation()"
+                    layout="horizontal"
+                    layout-align="center center" 
+                    >
+                      <img 
+                      class="overflowMenuIcon"
+                      ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
+                    </material-button>
+                  </div>
+
+                </material-card>
+                <material-card class="overflowMenu animate-show" ng-show="group.overflow">
+                  <a block class="overflowDuplicate"
+                  ng-click="duplicateGroup(group)">Duplicate Channel</a>
+                  <a block class="overflowDelete"
+                  ng-click="deleteGroup(group)">Delete Channel</a>
+                </material-card>
+              </div>
+            </div>
+          </material-content>
+        </div>
+      </div>
+
+    </div>
+    <script>
+      
+    </script>
+  </body>
+</html>
+              <!-- end material-card for groups -->
+
+              <!-- Quilt View 
+              <div ng-show="listView === 'quilt'">
+              </div>
+              -->
+
+
+
+              <!-- Stream View 
+              <material-list ng-show="listView === 'stream'">
+                <material-item ng-repeat="group in myGroups" ng-click="toggleGroup(group)">
+                  <div class="material-tile-left">
+                    <img ng-src="material-icons/icons/system_icons/social/res/2x_web/ic_group_48dp.png" class="face">
+                  </div>
+                  <div class="material-tile-content">
+                    <h2>{{group.name}}</h2>
+                    {{group.type}}
+                    <material-list>
+                      <div  ng-show="group.isActive === true" class="animate-show">
+                        
+                        <material-item ng-repeat="member in group.members">
+                          <div class="material-tile-left">
+                            <img ng-src="material-icons/icons/system_icons/social/res/2x_web/ic_person_48dp.png" class="face">
+                          </div>
+                          <div class="material-tile-content">
+                            <h2>{{member.name || member.id}}</h2>
+                          </div>
+                        </material-item>
+                      
+                      </div>
+                    </material-list>
+                  </div>
+                  
+                </material-item>
+              </material-list>
+              -->
