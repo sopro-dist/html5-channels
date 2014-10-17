@@ -37,7 +37,7 @@
         </material-content>
         <span flex></span>
         <div class="appVersion">
-          <p>Channels Manager version: 0.0.1</p>
+          <p>Channels Manager version: 0.0.2</p>
         </div>
       </material-sidenav>
 
@@ -123,11 +123,12 @@
                     <h3>{{group.name}}</h3>
                     <div class="lightDetails" layout="horizontal">
                       <span flex class='groupType'> {{group.type}} </span>
-                      <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png"> 
+                      <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_wht_18dp.png"> 
                       <span class="groupMemberLength"> {{group.members.length}} </span>
                     </div>
                     <p>{{group.purpose}}</p>
                   </div>
+
                   
                 <div class="cardMenuBar" 
                   layout="horizontal" 
@@ -151,6 +152,50 @@
                   <a block class="overflowDelete"
                   ng-click="deleteGroup(group)">Delete Channel</a>
                 </material-card>
+              </div>
+              <div class="cardholder" 
+              ng-repeat="channel in allChannels"
+              ng-mouseleave="group.overflow = false;"
+              ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}"
+              >
+                <material-card 
+                class="groupCard joined" 
+                layout="vertical">
+                  <div flex layout="vertical">
+                    <h3>{{channel}}</h3>
+                    <div class="lightDetails" layout="horizontal">
+                      <span flex class='groupType'> Channel </span>
+                      <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_wht_18dp.png"> 
+                      <span class="groupMemberLength"> {{$index*2}} </span>
+                    </div>
+                    <p></p>
+                  </div>
+                  <div layout="horizontal" class="joinBtn">
+                    <span flex></span>
+                    <material-button>Join</material-button>
+                  </div>
+                <div class="cardMenuBar" 
+                  layout="horizontal" 
+                  layout-align="end center">
+                    <material-button 
+                    class="overflowMenuButton material-button-icon" 
+                    ng-click="overflowToggle(group); $event.stopPropagation()"
+                    layout="horizontal"
+                    layout-align="center center" 
+                    >
+                      <img 
+                      class="overflowMenuIcon"
+                      ng-src="material-icons/icons/system_icons/action/res/1x_web/ic_drawer_wht_18dp.png">
+                    </material-button>
+                  </div>
+
+                </material-card>
+                <!--<material-card class="overflowMenu animate-show" ng-show="group.overflow">
+                  <a block class="overflowDuplicate"
+                  ng-click="duplicateGroup(group)">Duplicate Channel</a>
+                  <a block class="overflowDelete"
+                  ng-click="deleteGroup(group)">Delete Channel</a>
+                </material-card>-->
               </div>
             </div>
           </material-content>

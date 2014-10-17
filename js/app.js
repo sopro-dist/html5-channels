@@ -34,18 +34,19 @@ appModule = angular.module("app", ['ngMaterial'])
   $scope.menu = menu;
   $scope.menu.selectGroup(menu.groups[0]);
   $scope.myPeers = japi.me.peers;
-  var groups = japi.me.groups;
-  $scope.myGroups = [];
-  for (var i = 0; i < groups.length; i++) {
-    if (groups[i].type == "channel") {
-      $scope.myGroups.push(groups[i]);
-    }
-  };
+  var groups = japi.me.channels;
+  console.log(Cambrian);
+  $scope.myGroups = Cambrian.me.channels;
+  $scope.allChannels = Cambrian.channelsAvailable;
   $scope.myPeerLists = japi.me.peerLists;
   $scope.inputClick = false;
 
-  for (var i=0; i < $scope.myGroups.length; i++) {
-    $scope.myGroups[i].isActive = false;
+  for (var i=0; i < $scope.allChannels.length; i++) {
+    for (var j = 0; j < $scope.myGroups.length; j++) {
+       if ($scope.myGroups[j].name == $scope.allChannels[i]) {
+          $scope.allChannels.splice(i,1);
+       }
+     }; 
   };
 
   /*

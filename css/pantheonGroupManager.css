@@ -11,6 +11,11 @@ material-toolbar {
 }
 material-card.groupCard{
   background-color: #5F9F9F;
+  color: white;
+}
+material-card.groupCard.joined{
+  background-color: #4f738e;
+  color: white;
 }
 .navToolbar {
 	background-color: #728fa5;
@@ -29,4 +34,19 @@ material-sidenav {
 }
 .material-button-inner:hover {
 	background-color: gray;
+}
+.joinBtn button {
+	border: 2px solid;
+	opacity: 0.7;
+}
+.joinBtn button:hover {
+	opacity: 1;
+	background: none !important;
+}
+.joinBtn material-button:hover {
+	opacity: 1;
+	background: none !important;
+}
+.joinBtn material-button{
+	margin: 5px;
 }
