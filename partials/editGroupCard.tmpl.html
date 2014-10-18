@@ -1,8 +1,7 @@
-<!-- STYLES AT END OF TEMPLATE -->
 <material-dialog>
   <div layout="vertical" class="dialog-content">
     <div layout="horizontal" id="groupDialogCaption">
-      <h3 flex>Channel Management</h3>
+      <h3 flex>Group Management</h3>
       <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png">
       <span>{{group.members.length}}
     </div>
@@ -31,11 +30,23 @@
               ng-model="group.purpose"
               placeholder="Purpose"
         flex></textarea>
-    </div>
-
+    </div>    <h3>Rulescape</h3>
+    <div layout="horizontal" class="rulesLine">
+            <material-checkbox ng-init="data.cb4=true" ng-model="data.cb4" aria-label="Checkbox 1"></material-checkbox>
+            <p flex>Channel Open.</p>
+          </div>
+    <div class="rulesLine" ng-repeat="rule in group.rules" layout="horizontal"
+          ng-class="{focused: rule.hasFocus}" ng-mouseover="rule.menubar = true" ng-mouseleave="rule.menubar = false">
+            <material-checkbox ng-model="rule.isSelected"></material-checkbox>
+            <material-input type="text" class="rulesInput" ng-model="rule.text" flex placeholder="New Rule (click to edit)"  id="{{'rule'+$index}}" ng-keypress="keypressListener($event)" ng-focus="rule.hasFocus = true" ng-blur="rule.hasFocus = false" ng-keyup="checkForRuleDelete($event,$index)" ></material-input>
+            <material-button ng-show="rule.menubar" ng-click="removeRule($index)" title="Remove Rule"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></material-button>
+          </div>
+          <div class="newRuleWrapper" ng-class="{focused: newRuleFocused}">
+            <material-input type="text" id="addRuleInput" ng-model="newRuleText" ng-change="newRuleText = addRule(newRuleText)" placeholder="Add Rule" ng-focus="newRuleFocused = true" ng-blur="newRuleFocused = false"></material-input>
+          </div>
     <div flex layout="horizontal">
-      <section flex class="members" layout="vertical">
-        <span block class="sectionTitle">Channel Members</span>
+      <section flex="50" class="members" layout="vertical">
+        <span block class="sectionTitle">Group Members</span>
         <material-list flex>
           <material-item 
           ng-repeat="member in group.members | orderBy:'id' | orderBy:'name'"
@@ -43,17 +54,33 @@
           layout="horizontal"
           >
             <span flex>{{member.name || member.id }}</span>
-          </material-item>
-           <material-item 
-          class="membersAnimate"
-          layout="horizontal"
-          ng-show="group.members.length == 0"
-          >
-            <span flex>NO MEMBERS</span>
+            <img 
+            src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_forward_24dp.png"
+            ng-click="group.removePeer(member)"
+            >
           </material-item>
         </material-list>
         <!--
         <material-button block class="material-button-raised">Remove</material-button>
+        -->
+      </section>
+      <section flex="50" class="peers" layout="vertical">
+        <span block class="sectionTitle">Other Peers</span>
+        <material-list flex>
+          <material-item 
+          ng-repeat="peer in japi.me.peers | orderBy:'id' | orderBy:'name' | filter:nonMembers"
+          class="peersAnimate"
+          layout="horizontal"
+          >
+            <img 
+            src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_24dp.png"
+            ng-click="group.addPeer(peer)"
+            >
+            <span flex>{{peer.name || peer.id }}</span>
+          </material-item>
+        </material-list>
+        <!--
+        <material-button block class="material-button-raised">Add to Group</material-button>
         -->
       </section>
     </div>
