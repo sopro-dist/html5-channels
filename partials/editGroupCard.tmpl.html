@@ -1,7 +1,7 @@
 <material-dialog>
   <div layout="vertical" class="dialog-content">
     <div layout="horizontal" id="groupDialogCaption">
-      <h3 flex>Group Management</h3>
+      <h3 flex>Channel Management</h3>
       <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png">
       <span>{{group.members.length}}
     </div>
@@ -9,7 +9,7 @@
     <material-input-group>
       <label 
       for="groupName"
-      >Group Name</label>
+      >Channel Name</label>
 
       <material-input 
       name="groupName" 
@@ -46,7 +46,7 @@
           </div>
     <div flex layout="horizontal">
       <section flex="50" class="members" layout="vertical">
-        <span block class="sectionTitle">Group Members</span>
+        <span block class="sectionTitle">Channel Members</span>
         <material-list flex>
           <material-item 
           ng-repeat="member in group.members | orderBy:'id' | orderBy:'name'"
@@ -65,7 +65,7 @@
         -->
       </section>
       <section flex="50" class="peers" layout="vertical">
-        <span block class="sectionTitle">Other Peers</span>
+        <span block class="sectionTitle">Invite Peers</span>
         <material-list flex>
           <material-item 
           ng-repeat="peer in japi.me.peers | orderBy:'id' | orderBy:'name' | filter:nonMembers"
