@@ -29,6 +29,8 @@ material-card.groupCard{
   max-width: 300px;
   min-width: 300px;
   padding: 16px 16px 0 16px;
+  position: relative;
+  z-index: 0;
 }
 
 material-card.groupCard h3{
@@ -187,6 +189,7 @@ core-icon-button:focus{
   display: inline-block;
   vertical-align: top;
   position: relative;
+  z-index: 0;
 }
 .quilt {
   display: inline-block;
