@@ -107,7 +107,7 @@ appModule = angular.module("app", ['ngMaterial'])
     //var buildGroup = angular.copy(group);
     var buildGroup = japi.groups.build("open");
     buildGroup.channelName = group.channelName+" (Duplicate)";
-    biuldGroup.purpose = group.purpose;
+    buildGroup.purpose = group.purpose;
     buildGroup.overflow = false;
     $scope.myGroups.push(buildGroup);
     group.overflow = false;
