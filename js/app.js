@@ -96,6 +96,7 @@ appModule = angular.module("app", ['ngMaterial'])
     groupToAdd.purpose = $scope.newGroupPurpose;
     groupToAdd.members = [];
     $scope.myGroups.push(groupToAdd);
+    groupToAdd.save();
     $scope.inputClick = false;
     $scope.newGroupTitle = "";
     $scope.newGroupPurpose = "";
@@ -103,14 +104,15 @@ appModule = angular.module("app", ['ngMaterial'])
     $scope.dialog(null, groupToAdd);
   };
 
-  $scope.duplicateGroup = function (group) {
+  $scope.duplicateGroup = function (group, e) {
     //var buildGroup = angular.copy(group);
     var buildGroup = japi.groups.build("open");
     buildGroup.channelName = group.channelName+" (Duplicate)";
     buildGroup.purpose = group.purpose;
     buildGroup.overflow = false;
     $scope.myGroups.push(buildGroup);
-    group.overflow = false;
+    buildGroup.save();
+    $scope.dialog(e,buildGroup);
   };
 
   $scope.deleteGroup = function (group) {

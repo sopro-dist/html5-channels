@@ -38,7 +38,7 @@
         </material-content>
         <span flex></span>
         <div class="appVersion">
-          <p>v0.0.3</p>
+          <p>v0.0.4</p>
         </div>
       </material-sidenav>
 
@@ -112,7 +112,7 @@
             <div id= "myGroupsContainer">
               <!-- material-card for groups -->  
               <div class="cardholder" 
-              ng-repeat="group in myGroups"
+              ng-repeat="group in myGroups track by $index"
               ng-mouseleave="group.overflow = false;"
               ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}"
               >
@@ -149,13 +149,13 @@
                 </material-card>
                 <material-card class="overflowMenu animate-show" ng-show="group.overflow">
                   <a block class="overflowDuplicate"
-                  ng-click="duplicateGroup(group)">Duplicate Channel</a>
+                  ng-click="duplicateGroup(group,$event)">Duplicate Channel</a>
                   <a block class="overflowDelete"
                   ng-click="deleteGroup(group)">Delete Channel</a>
                 </material-card>
               </div>
               <div class="cardholder" 
-              ng-repeat="channel in allChannels"
+              ng-repeat="channel in allChannels track by $index"
               ng-mouseleave="group.overflow = false;"
               ng-class="{quilt:listView == 'quilt', stream:listView == 'stream'}"
               >
