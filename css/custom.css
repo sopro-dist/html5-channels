@@ -199,6 +199,11 @@ core-icon-button:focus{
   max-width: none;
 }
 
+.stream .overflowMenu {
+  width: initial;
+  right: 4%;
+}
+
 #addGroupCardButton {
   transition: top ease-in-out 0.3s;
   transition: background-color ease-in-out 0.3s;
