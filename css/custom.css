@@ -22,37 +22,54 @@ when compiled until we fork sidenav.
 See: https://github.com/angular/material/blob/master/src/components/sidenav/_sidenav.scss#L44 
 */
 
-material-card.groupCard{
+md-card.groupCard{
+  position: relative;
   background-color: lightgreen;
+  border-bottom: 1px solid #c4c4c4;
+  border-left: 1px solid #d3d3d3;
+  border-right: 1px solid #d3d3d3;
+  border-top: 1px solid #d3d3d3;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.07);
+  color: #444;
   display: inline-block;
-  min-height: 100px;
-  max-width: 300px;
-  min-width: 300px;
-  padding: 16px 16px 0 16px;
+  margin:8px;
+  width: 208px;
+  cursor: pointer;
+  opacity: 1;
 }
 
-material-card.groupCard h3{
+md-card.groupCard h3{
   min-height: 28px;
   line-height: 28px;
   margin: 0;
   padding: 0;
 }
 
-material-card.groupCard span.groupType{
+md-card.groupCard span.groupType{
   text-transform:capitalize;
 }
 
-.cardMenuBar{
-  visibility: hidden;
+.overflowMenu {
+  background-color: white;
+  color: black;
+  position: absolute;
+  right: -6px;
+  z-index: 2;
+  cursor: pointer;
 }
 
-.cardholder:hover .cardMenuBar{
-  visibility: visible; 
+.overflowMenu>a{
+  margin:10px 0px;
+  display: block;
 }
 
 .overflowMenuButton{
   /* Brute force vertical align of 18px img in 24px cardMenuBar */
   margin-top: 4px;
+  opacity: 0.7;
+}
+.overflowMenuButton:hover{
+  opacity: 1;
 }
 .lightDetails {
   opacity: 0.4;
@@ -82,7 +99,7 @@ material-card.groupCard span.groupType{
   vertical-align: top;
 }
 */
-/* end material-card styles */
+/* end md-card styles */
 
 core-icon-button:focus{
   background-color: rgba(0,0,0,0.54);
@@ -94,13 +111,25 @@ core-icon-button:focus{
 }
 
 #viewButtons {
-  margin: 8px 18px 0px 18px;
+  display: inline-block;
+  margin-right: 12px;
 }
 
 .viewButton {
-  border: 1px solid rgba(0,0,0,0.2);
-  height: 48px;
-  width: 53px;
+ -webkit-user-select: none;
+cursor: pointer;
+outline: none;
+padding: 12px;
+border-radius: 0 !important;
+border: 1px solid transparent;
+font-size: 13px;
+font-weight: normal;
+line-height: 21px;
+min-width: 0;
+text-align: center;
+white-space: nowrap;
+position: relative;
+display: inline-block;
 }
 .viewButton.active {
   background-color: rgba(0,0,0,0.1);
@@ -113,7 +142,17 @@ core-icon-button:focus{
   top: 0;
   cursor: pointer;
 }
-
+.toolbarTitle {
+  display: inline-block;
+  margin-left: 12px;
+  vertical-align: middle;
+}
+.menu-icon {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 12px;
+  height: initial;
+}
 .mainTitle {
   width: 100%;
 }
@@ -133,50 +172,100 @@ core-icon-button:focus{
   vertical-align: top;
 }
 
-#quickAddBox {
-  border: 1px solid lightgrey;
-  display: block;
-  position: relative;
-  max-width: 500px;
+.quickAddBox {
+  width: 612px;
+  display: table;
   margin: auto;
-  box-sizing: border-box;
-  padding: 8px;
-  line-height: 24px;
-  background-color: rgba(255,255,255,0.9);
-  margin-top: 4px;
-  margin-bottom: 14px;
+  min-height: 33px;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  position: relative;
+  padding: 0px;
+}
+.quickAddForm {
+  overflow-x :hidden;
+  overflow-y: auto; 
 }
 
 #quickAddTitle {
-  display: inline-block;
-  border-bottom: none;
+  font-size: 17px;
+  line-height: 23px;
+  padding: 15px 15px 0 15px;
+  box-sizing: border-box;
+  color: rgba(0,0,0,0.8);
+  font-family: 'Roboto Condensed','Droid Sans',arial,sans-serif;
+  outline: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  width: 100%;
+  border: none;
+}
+#quickAddTitle.hideQuickAddBox {
   font-size: 14px;
+  line-height: 19px;
+  min-height: 46px;
+  padding: 12px 15px 15px 15px;
+}
+#quickAddPurpose {
+  width: 100%;
+  font-size: 14px;
+  line-height: 19px;
+  min-height: 46px;
+  padding: 12px 15px 15px 15px;
+  box-sizing: border-box;
+  color: rgba(0,0,0,0.8);
+  font-family: 'Roboto Slab','Times New Roman',serif;
+  outline: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  resize:none;
+  border: none;
 }
 
 #quickAddAdditional {
-  margin-top: 8px;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  position: relative;
 }
 
-#quickAddBox .bold {
+.bold {
   font-weight: bold;
-  font-size: 17px;
 }
 #quickAddDescription {
   display: inline-block;
   border-bottom: none;
   font-size: 14px;
 }
-#quickAddBox input {
-  border-bottom: none;
-}
-#quickAddBox textarea {
-  border-bottom: none;
-  width: 100%;
-  line-height: 1.2em;
-}
 
 #quickAddButton {
-  float: right;
+  margin-right: 15px;
+  box-shadow: none;
+  background-color: #f5f5f5;
+  background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
+  color: #444;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 2px;
+  cursor: default;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+  height: 27px;
+  line-height: 27px;
+  min-width: 54px;
+  outline: 0;
+  padding: 0 8px;
+  display: inline-block;
+}
+#quickAddButton .md-button-inner {
+  margin-top: -5px;
+}
+#quickAddButton:hover {
+  box-shadow: none;
+  background-color: #f8f8f8;
+  background-image: -webkit-linear-gradient(top,#f8f8f8,#f1f1f1);
+  color: #333;
+  border: 1px solid #c6c6c6;
 }
 
 #myGroupsContainer{
@@ -191,18 +280,67 @@ core-icon-button:focus{
 .quilt {
   display: inline-block;
 }
-.stream {
-  width:100%;
+
+.streamMargin {
+  margin-top: 100px !important;
 }
-.stream material-card {
-  width: 95%;
-  max-width: none;
+.streamTitles {
+  padding: 18px 0 18px 0;
+  color: #888888;
+  display: -webkit-flex;
+  outline: none;
+  font-weight: 500;
+  margin: 0px 10px;
+}
+.streamCardholder {
+  position: relative;
+}
+.firstCard {
+  margin-top: 16px;
+}
+.streamMainCard {
+  background-color: #fff;
+  height: 48px;
+  max-height: 48px;
+  margin: 0px;
+  cursor: pointer;
+  opacity: 1;
+  border-bottom: 1px solid #e3e3e3;
+  color: #444;
+  display: -webkit-flex;
+}
+.streamCardContentContainer {
+  width: 100%;
+}
+.streamPollLine {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+  margin-left: 14px;
+  padding: 2px;
+  width: 50%;
+  margin-bottom: auto;
+  margin-left: 16px;
+  margin-top: auto;
+}
+.streamPollLine.gray {
+  color: #eee;
+}
+.streamPollLine > img {
+  margin-bottom: -5px;
+}
+.streamCardMenuBar {
+  margin-left: -60px;
 }
 
-.stream .overflowMenu {
-  width: initial;
-  right: 4%;
+.streamOverflowMenuButton .md-button-inner {
+  height: 30px;
 }
+.streamCardholder > .overflowMenu {
+  top:35px;
+  right:-8px;
+} 
 
 #addGroupCardButton {
   transition: top ease-in-out 0.3s;
@@ -233,7 +371,7 @@ core-icon-button:focus{
   -webkit-transform: rotate(360deg);
 }
 
-material-item {
+md-item {
   align-items: flex-start;
   cursor: pointer;
 }
@@ -318,20 +456,20 @@ material-item {
   height: 100%;
   width: 100%; }
 
- material-content, .material-content {
+ md-content, .md-content {
   display: block;
   overflow: auto;
   -webkit-overflow-scrolling: touch; }
-  material-content[scroll-y], .material-content[scroll-y] {
+  md-content[scroll-y], .md-content[scroll-y] {
     overflow-y: auto;
     overflow-x: hidden; }
-  material-content[scroll-x], .material-content[scroll-x] {
+  md-content[scroll-x], .md-content[scroll-x] {
     overflow-x: auto;
     overflow-y: hidden; }
-  material-content.material-content-padding, .material-content.material-content-padding {
+  md-content.md-content-padding, .md-content.md-content-padding {
     padding: 20px; }
 
-material-toolbar {
+md-toolbar {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -349,16 +487,16 @@ material-toolbar {
   font-size: 1.3em;
   min-height: 64px;
   width: 100%; }
-  material-toolbar.material-tall {
+  md-toolbar.md-tall {
     height: 192px; }
-  material-toolbar.material-medium-tall {
+  md-toolbar.md-medium-tall {
     height: 88px; }
-    material-toolbar.material-medium-tall .material-toolbar-tools {
+    md-toolbar.md-medium-tall .md-toolbar-tools {
       height: 48px; }
-  material-toolbar .material-indent {
+  md-toolbar .md-indent {
     margin-left: 64px; }
 
-.material-toolbar-tools {
+.md-toolbar-tools {
   display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
@@ -382,48 +520,64 @@ material-toolbar {
   font-weight: normal;
   padding: 0 10px;
   margin: 0; }
-  .material-toolbar-tools > * {
+  .md-toolbar-tools > * {
     font-size: inherit;
     margin: 0 8px; }
-  .material-toolbar-tools h2, .material-toolbar-tools h3 {
+  .md-toolbar-tools h2, .md-toolbar-tools h3 {
     font-weight: normal; }
-  .material-toolbar-tools a {
+  .md-toolbar-tools a {
     color: inherit;
     text-decoration: none; }
-  .material-toolbar-tools material-button {
+  .md-toolbar-tools md-button {
     font-size: 16px; }
 */
-material-toolbar {
-  min-height: 48px;
-  height: 48px;
+md-button .md-button-inner {
+padding: 5px 0px;
 }
-.menu-icon {
-  top: 0;
-  margin-top: -14px;
-  margin-left: 18px;
-  margin-right: 9px;
+md-toolbar {
+  box-shadow: 0px 1px 4px rgba(0,0,0,.3);
+  font-family: Roboto,Arial,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 20px;
+  height: 64px;
+  position: relative;
+  z-index: 1;
+}
+.md-toolbar-tools {
+  display: inline-block;
+  position: relative;
+  color: white;
   cursor: pointer;
+  min-width: 100px;
+  outline: none;
+  padding: 8px 0 8px 16px;
+  white-space: nowrap;
+  width: 240px;
+  min-height: 64px;
 }
+
 #toolTitle {
   margin-bottom: 20px;
   font-size: 15px;
   margin-left: 0px;
 }
-.viewButton {
-  border: 1px solid rgba(0,0,0,0.2);
-  height: 26px;
-  width: 35px;
-  margin-top: 3px;
-}
+
 .viewButton:hover {
   opacity: 1;
+  background-color: rgba(158, 158, 158, 0.2);
 }
-#streamButton:hover {
-  background: none;
+.viewButton md-icon{
+  height: 24px;
+outline: none;
+width: 24px;
+direction: ltr;
+text-align: left;
+overflow: hidden;
+position: relative;
+vertical-align: middle;
+margin-top: 0px;
 }
-#quiltButton:hover {
-  background: none;
-}
+
 .viewButton button img {
   margin-top: -3px;
   margin-left: -1px;
@@ -434,19 +588,19 @@ material-toolbar {
   margin-bottom: 0px;
   padding: 10px;
 }
-.material-dialog-container material-dialog {
+.md-dialog-container md-dialog {
   width:  50%;
 }
-material-ink-bar {
+md-ink-bar {
   background: black;
 }
-material-checkbox {
+md-checkbox {
   margin:0px;
 }
 .tab1 {
   padding:15px;
 }
-material-checkbox:focus .material-label {
+md-checkbox:focus .md-label {
   border-color:transparent;
 }
 .checkLabel {
@@ -478,10 +632,10 @@ material-checkbox:focus .material-label {
   background-color: #5B391E !important;
   color: white;
 }
-material-checkbox .material-icon {
+md-checkbox .md-icon {
   margin-top: 3px;
 }
-material-checkbox {
+md-checkbox {
   margin: 1px;
 }
 .newRuleWrapper {
@@ -512,6 +666,9 @@ margin: 16px 0;
   margin: 0px 5px;
   display: inline-block;
 }
+.rulesLine {
+  max-height: 32px;
+}
 .rulesLine p {
   margin: 0px;
   display: inline-block;
@@ -527,4 +684,83 @@ textarea {
 }
 .groupCard div p {
   overflow: hidden;
+}
+.positionAuto {
+  top: auto !important;
+  left: auto !important;
+}
+.toggleImage{
+  height: 24px;
+outline: none;
+width: 24px;
+direction: ltr;
+text-align: left;
+overflow: hidden;
+position: relative;
+vertical-align: top;
+}
+
+.sidenavToolbar {
+  border-bottom: 1px solid #e3e3e3;
+  margin-bottom: 12px;
+  background-color: #fff !important;
+  color: #333 !important;
+}
+.sidenavToolbar:hover {
+  background-color: #eee !important;
+}
+
+md-sidenav {
+  border: 1px solid #e3e3e3;
+  border-top: none;
+  border-width: 1px 0;
+  font-size: 14px;
+  padding: 0px 0px 6px;
+  min-width: 240px;
+  max-width: 240px;
+}
+md-content.md-default-theme {
+  background-color: #EEEEEE;
+}
+md-backdrop.md-opaque.md-default-theme {
+  background-color: rgba(0,0,0,0);
+}
+
+.container {
+  font-size: 14px;
+  height: 100%;
+  left: 10px;
+  margin: 0 auto;
+  padding: 0 0 150px 0;
+  position: relative;
+  width: 690px;
+}
+
+@media only screen and (min-width: 1100px) {
+  .container {
+    width: 920px;
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .container {
+    width: 1150px;
+  }
+}
+md-input-group, .md-input-group {
+  margin: 0px;
+}
+.md-dialog-container {
+  background-color: rgba(229,229,229,.75);  
+}
+.channelDialogInput > input {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.quickFabButton {
+  position: fixed;
+  right: 39px;
+  bottom: 24px;
 }

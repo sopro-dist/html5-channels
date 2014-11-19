@@ -11,7 +11,7 @@ if(Cambrian.JAPI !== undefined && !Cambrian.isMockCambrian){
 
 //appModule = angular.module("app", ['eee-c.angularBindPolymer'])
 
-appModule = angular.module("app", ['ngMaterial'])
+appModule = angular.module("app", ['ngMaterial','wu.masonry'])
 /*.factory("menu", ['$rootScope', function ($rootScope) {
   var self;
   var groups = ['myGroups', 'myPeerLists'];
@@ -29,22 +29,30 @@ appModule = angular.module("app", ['ngMaterial'])
   };
 
 }])*/
-.controller("appCtrl", function ($scope, $materialSidenav, $materialDialog, $rootScope) {
+.controller("appCtrl", function ($scope, $mdSidenav, $mdDialog, $rootScope, $timeout) {
   
   var groups = japi.me.channels;
-  console.log(Cambrian);
   $scope.myGroups = Cambrian.me.channels;
-  console.log($scope.myGroups[0]);
-  console.log(japi);
   $scope.allChannels = Cambrian.channelsAvailable;
   $scope.inputClick = false;
 
-  for (var i=0; i < $scope.allChannels.length; i++) {
-    for (var j = 0; j < $scope.myGroups.length; j++) {
-       if ($scope.myGroups[j].name == $scope.allChannels[i]) {
-          $scope.allChannels.splice(i,1);
-       }
-     }; 
+  $scope.reloadMasonry = true;
+  var reloadM = function () {
+    $scope.reloadMasonry = false;
+    $timeout(function () {
+      $scope.reloadMasonry = true;
+    },25); 
+  }
+
+  $scope.safeApply = function(fn) {
+    var phase = $rootScope.$$phase;
+    if(phase == '$apply' || phase == '$digest') {
+      if(fn && (typeof(fn) === 'function')) {
+        fn();
+      }
+    } else {
+      this.$apply(fn);
+    }
   };
 
   /*
@@ -62,7 +70,7 @@ appModule = angular.module("app", ['ngMaterial'])
       if (exists) {
         $scope.$apply(function() {
           $scope.inputClick = false;
-          $scope.newGroupType = "";
+          $scope.newGroupTitle = "";
           $scope.newGroupPurpose = "";
           $scope.quickAddForm.$setPristine();
         });       
@@ -71,16 +79,18 @@ appModule = angular.module("app", ['ngMaterial'])
   });
 
   $scope.toggleMenu = function () {
-    $materialSidenav('left').toggle();
+    $mdSidenav('left').toggle();
   };
 
   $scope.listView = "quilt";
 
   $scope.streamView = function () {
+    $scope.safeApply(reloadM);
     $scope.listView = "stream";
   };
 
   $scope.quiltView = function () {
+    $scope.safeApply(reloadM);
     $scope.listView = "quilt";
   };
 
@@ -101,6 +111,13 @@ appModule = angular.module("app", ['ngMaterial'])
     $scope.newGroupTitle = "";
     $scope.newGroupPurpose = "";
     $scope.quickAddForm.$setPristine();
+    $scope.dialog(null, groupToAdd);
+  };
+  $scope.newGroupFromScratch = function () {
+    //var groupToAdd = { name: $scope.newGroupTitle, groupType: $scope.newGroupType, members: []};
+    var groupToAdd = japi.groups.build('open');
+    groupToAdd.channelName = "";
+    groupToAdd.type = "channel";
     $scope.dialog(null, groupToAdd);
   };
 
@@ -134,11 +151,16 @@ appModule = angular.module("app", ['ngMaterial'])
   }
 
   $scope.dialog = function (e, group) {
-    $materialDialog({
+    $mdDialog.show({
       templateUrl: 'partials/editGroupCard.tmpl.html',
       targetEvent: e,
-      controller: ['$scope', '$hideDialog', function ($scope, $hideDialog) {
-        $scope.group = group;
+      controller: ['$scope', '$mdDialog', function ($scope, $mdDialog) {
+        var groupToSave = japi.groups.build('open');
+        groupToSave.channelName = group.channelName;
+        groupToSave.type = "channel";
+        groupToSave.purpose = group.purpose;
+        groupToSave.members = [];
+        $scope.group = groupToSave;
         $scope.japi = japi;
         console.log('Setting dialog $scope.newGroupType to ',group.type)
         $scope.groupTypes;
@@ -154,12 +176,15 @@ appModule = angular.module("app", ['ngMaterial'])
           return true; // this nonmember should be shown
         };
         $scope.close = function () {
-          $hideDialog();
+          $mdDialog.hide();
         };
 
-        $scope.save = function (group) {
-          group.save()
-          $hideDialog();
+        $scope.save = function () {
+          group.channelName = groupToSave.channelName;
+          group.purpose = groupToSave.purpose;
+          group.members = groupToSave.members;
+          group.save();
+          $mdDialog.hide();
         };
       }]
     });

@@ -1,105 +1,92 @@
-<material-dialog>
-  <div layout="vertical" class="dialog-content">
+<md-dialog>
+  <md-content layout="vertical" class="dialog-content">
     <div layout="horizontal" id="groupDialogCaption">
       <h3 flex>Channel Management</h3>
       <img ng-src="material-icons/icons/system_icons/social/res/1x_web/ic_group_18dp.png">
       <span>{{group.members.length}}
     </div>
-
-    <material-input-group>
-      <label 
-      for="groupName"
-      >Channel Name</label>
-
-      <material-input 
-      name="groupName" 
-      id="groupName" 
-      type="text" 
-      size="45" 
-      ng-model="group.name"
-      ></material-input>
-    </material-input-group>
-
-    <label for="groupTypeContainer">Purpose</label>
-    
-    <div id="groupTypeContainer" layout="horizontal">
-       <textarea 
-              name="groupPurpose" 
-              id="groupPurpose" 
-              type="text" 
-              ng-model="group.purpose"
-              placeholder="Purpose"
-        flex></textarea>
-    </div>    <h3>Rulescape</h3>
+    <md-text-float name="groupName" id="groupName" label="Channel Name" ng-model="group.name" class="channelDialogInput" size="5"> </md-text-float>
+    <md-text-float name="groupPurpose" id="groupPurpose" label="Purpose" ng-model="group.purpose" class="channelDialogInput"></md-text-float>
+    <h3>Rulescape</h3>
     <div layout="horizontal" class="rulesLine">
-            <material-checkbox ng-init="data.cb4=true" ng-model="data.cb4" aria-label="Checkbox 1"></material-checkbox>
+            <md-checkbox ng-init="data.cb4=true" ng-model="data.cb4" aria-label="Checkbox 1"></md-checkbox>
             <p flex>Channel Open.</p>
           </div>
+          <div class="optionsLine" ng-repeat="opt in poll.options" layout="horizontal"
+          ng-class="{focused: opt.hasFocus}" ng-mouseover="opt.menubar = true" ng-mouseleave="opt.menubar = false" ng-show="newItem">
+          <md-checkbox ng-model="opt.isSelected"></md-checkbox>
+          <md-input type="text" class="optionsInput" ng-model="opt.text" flex placeholder="New Poll Option (click to edit)"  focus-this="{{$index}}" ng-keypress="keypressListener($event)" ng-focus="opt.hasFocus = true" ng-blur="opt.hasFocus = false" ng-keyup="checkForOptionDelete($event,$index)" ></md-input>
+          <md-button ng-show="opt.menubar" ng-click="removeOption($index)" aria-label="Remove Option">
+            <img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></md-button>
+        </div>
+        <div class="newOptionWrapper" ng-class="{focused: newOptionFocused}" ng-show="newItem">
+          <md-input type="text" id="addOptionInput" ng-model="newOptionText" ng-change="addOption()" placeholder="Add option" ng-focus="newOptionFocused = true" ng-blur="newOptionFocused = false"></md-input>
+        </div>
     <div class="rulesLine" ng-repeat="rule in group.rules" layout="horizontal"
           ng-class="{focused: rule.hasFocus}" ng-mouseover="rule.menubar = true" ng-mouseleave="rule.menubar = false">
-            <material-checkbox ng-model="rule.isSelected"></material-checkbox>
-            <material-input type="text" class="rulesInput" ng-model="rule.text" flex placeholder="New Rule (click to edit)"  id="{{'rule'+$index}}" ng-keypress="keypressListener($event)" ng-focus="rule.hasFocus = true" ng-blur="rule.hasFocus = false" ng-keyup="checkForRuleDelete($event,$index)" ></material-input>
-            <material-button ng-show="rule.menubar" ng-click="removeRule($index)" title="Remove Rule"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></material-button>
+            <md-checkbox ng-model="rule.isSelected"></md-checkbox>
+            <md-input type="text" class="rulesInput" ng-model="rule.text" flex placeholder="New Rule (click to edit)"  id="{{'rule'+$index}}" ng-keypress="keypressListener($event)" ng-focus="rule.hasFocus = true" ng-blur="rule.hasFocus = false" ng-keyup="checkForRuleDelete($event,$index)" ></md-input>
+            <md-button ng-show="rule.menubar" ng-click="removeRule($index)" title="Remove Rule"><img ng-src="material-icons/icons/system_icons/content/res/1x_web/ic_clear_18dp.png"></md-button>
           </div>
           <div class="newRuleWrapper" ng-class="{focused: newRuleFocused}">
-            <material-input type="text" id="addRuleInput" ng-model="newRuleText" ng-change="newRuleText = addRule(newRuleText)" placeholder="Add Rule" ng-focus="newRuleFocused = true" ng-blur="newRuleFocused = false"></material-input>
+            <md-input type="text" id="addRuleInput" ng-model="newRuleText" ng-change="newRuleText = addRule(newRuleText)" placeholder="Add Rule" ng-focus="newRuleFocused = true" ng-blur="newRuleFocused = false"></md-input>
           </div>
     <div flex layout="horizontal">
       <section flex="50" class="members" layout="vertical">
         <span block class="sectionTitle">Channel Members</span>
-        <material-list flex>
-          <material-item 
-          ng-repeat="member in group.members | orderBy:'id' | orderBy:'name'"
+        <md-list flex>
+          <md-item 
+          ng-repeat="member in group.members | orderBy:'id' | orderBy:'name' track by $index"
           class="membersAnimate"
           layout="horizontal"
           >
             <span flex>{{member.name || member.id }}</span>
             <img 
             src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_forward_24dp.png"
-            ng-click="group.removePeer(member)"
+            ng-click="group.removePeer(member)" height="24" width="24"
             >
-          </material-item>
-        </material-list>
+          </md-item>
+        </md-list>
         <!--
-        <material-button block class="material-button-raised">Remove</material-button>
+        <md-button block class="md-button-raised">Remove</md-button>
         -->
       </section>
       <section flex="50" class="peers" layout="vertical">
         <span block class="sectionTitle">Invite Peers</span>
-        <material-list flex>
-          <material-item 
-          ng-repeat="peer in japi.me.peers | orderBy:'id' | orderBy:'name' | filter:nonMembers"
+        <md-list flex>
+          <md-item 
+          ng-repeat="peer in japi.me.peers | orderBy:'id' | orderBy:'name' | filter:nonMembers track by $index"
           class="peersAnimate"
           layout="horizontal"
           >
             <img 
             src="material-icons/icons/system_icons/navigation/res/1x_web/ic_arrow_back_24dp.png"
-            ng-click="group.addPeer(peer)"
+            ng-click="group.addPeer(peer)" height="24" width="24"
             >
             <span flex>{{peer.name || peer.id }}</span>
-          </material-item>
-        </material-list>
+          </md-item>
+        </md-list>
         <!--
-        <material-button block class="material-button-raised">Add to Group</material-button>
+        <md-button block class="md-button-raised">Add to Group</md-button>
         -->
       </section>
     </div>
-  </div>
-  <footer class="dialog-actions" layout="horizontal" layout-end="end center">
-    <material-button ng-click="close()">
+  </md-content>
+  <div class="md-actions" layout="horizontal" layout-end="end center">
+    <md-button ng-click="close()">
       Close
-    </material-button>
-    <material-button ng-click="save(group)" class="material-button-colored">
+    </md-button>
+    <md-button ng-click="save(group)" class="md-primary">
       Save
-    </material-button>
-  </footer>
-</material-dialog>
+    </md-button>
+  </div>
+</md-dialog>
 
 
 <style>
 /* Some of these have !important because they are are overriding 
-angular's material style defaults */
-.material-dialog-container material-dialog{
+angular's md style defaults */
+.md-dialog-container md-dialog{
   min-width: 400px !important;
   border-radius: 0px !important;
 }
@@ -139,14 +126,14 @@ section.peers {
 .dialog-content section{
   overflow-y: hidden;
   overflow-x: visible;
-  margin-top: 8px;
+  margin-top: 0px;
 }
-.dialog-content section material-list{
+.dialog-content section md-list{
   overflow-y: auto;
   overflow-x: visible;
 }
 
-.dialog-content material-list material-item {
+.dialog-content md-list md-item {
   overflow-x: hidden;
   min-height: 56px;
   line-height: 24px;
@@ -154,17 +141,17 @@ section.peers {
   font-weight: bold;
 }
 
-.dialog-content section material-button.material-button-raised {
+.dialog-content section md-button.md-button-raised {
   min-height: 40px;
   line-height: 24px;
   background-color: white;
   margin: 4px 24px 4px 24px;
 }
 
-material-dialog footer {
+md-dialog footer {
   min-height: 64px !important;
 }
-material-dialog footer material-button{
+md-dialog footer md-button{
   font-size: 1.6em;
   margin-left: 32px;
 }
